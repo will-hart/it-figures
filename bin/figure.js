@@ -121,7 +121,7 @@ var Figure = /** @class */ (function () {
                     case 4:
                         imgBuffer = _b.sent();
                         if (!image.caption) return [3 /*break*/, 6];
-                        return [4 /*yield*/, this.addCaption(imgBuffer, image.caption, this.metadata.fontSize || 32)];
+                        return [4 /*yield*/, this.addCaption(imgBuffer, image.caption, this.metadata.fontSize || 32, this.metadata.fontFamily || 'Open Sans')];
                     case 5:
                         imgBuffer = _b.sent();
                         _b.label = 6;
@@ -142,12 +142,12 @@ var Figure = /** @class */ (function () {
                 }
             });
         }); };
-        this.addCaption = function (buf, caption, fontSize) { return __awaiter(_this, void 0, void 0, function () {
+        this.addCaption = function (buf, caption, fontSize, font) { return __awaiter(_this, void 0, void 0, function () {
             var captBuffer;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        captBuffer = new Buffer("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\">\n      <text x=\"0\" y=\"0\" dy=\"" + fontSize + "\" font-size=\"" + fontSize + "\" fill=\"#FFF\">" + caption + "</text>\n    </svg>");
+                        captBuffer = new Buffer("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\">\n      <style>.c { font-family: \"" + font + "\" }</style>\n      <text class=\"c\" x=\"0\" y=\"0\" dy=\"" + fontSize + "\" font-size=\"" + fontSize + "\" fill=\"#000\">" + caption + "</text>\n    </svg>");
                         return [4 /*yield*/, sharp(buf).overlayWith(captBuffer, { top: 0, left: 0 }).toBuffer()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }

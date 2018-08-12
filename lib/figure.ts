@@ -76,7 +76,7 @@ class Figure {
       let imgBuffer = await blank.overlayWith(subfig, { top: offy, left: offx }).toBuffer()
 
       if (image.caption) {
-        imgBuffer = await this.addCaption(imgBuffer, image.caption, this.metadata.fontSize || 32)
+        imgBuffer = await this.addCaption(imgBuffer, image.caption, this.metadata.fontSize || 32, this.metadata.fontFamily || 'Open Sans')
       }
 
       const buff = await newSh.overlayWith(imgBuffer, {
@@ -90,9 +90,10 @@ class Figure {
     return newSh
   }
 
-  addCaption = async (buf: Buffer, caption: string, fontSize: number) => {
+  addCaption = async (buf: Buffer, caption: string, fontSize: number, font: string) => {
     const captBuffer = new Buffer(`<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-      <text x="0" y="0" dy="${fontSize}" font-size="${fontSize}" fill="#FFF">${caption}</text>
+      <style>.c { font-family: "${font}" }</style>
+      <text class="c" x="0" y="0" dy="${fontSize}" font-size="${fontSize}" fill="#000">${caption}</text>
     </svg>`)
 
     return await sharp(buf).overlayWith(captBuffer, { top: 0, left: 0 }).toBuffer()
