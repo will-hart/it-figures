@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "output": "output.png",
+      "width": "16",
+      "height": "9",
+      "sizex": "100",
+      "sizey": "100",
+      "images": [
+        { "source": "input.svg", "top": "0", "left": "0", "rowspan": "7", "colspan": "9" },
+        { "source": "input.png", "top": "6", "left": "5", "rowspan": "2", "colspan": "3" }
+      ]
+    }
+  ]
+}
