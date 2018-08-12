@@ -37,8 +37,8 @@ class Figure {
     // start by creating an empty input buffer in the size of the image
     return await sharp(undefined, {
       create: {
-        width: this.metadata.grid_width * this.metadata.grid_sizex,
-        height: this.metadata.grid_height * this.metadata.grid_sizey,
+        width: this.metadata.width * this.metadata.sizex,
+        height: this.metadata.height * this.metadata.sizey,
         channels: 4,
         background: { r: 0, g: 0, b: 0, alpha: 0 }
       }
@@ -53,10 +53,10 @@ class Figure {
     let newSh = sh
 
     for (const image of this.metadata.images) {
-      const top = image.grid_top * this.metadata.grid_sizey
-      const left = image.grid_left * this.metadata.grid_sizex
-      const w = image.grid_colspan * this.metadata.grid_sizex
-      const h = image.grid_rowspan * this.metadata.grid_sizey
+      const top = image.top * this.metadata.sizey
+      const left = image.left * this.metadata.sizex
+      const w = image.colspan * this.metadata.sizex
+      const h = image.rowspan * this.metadata.sizey
       console.log(`Overlaying image ${image.source} at {${top}, ${left}} with dimensions ${w} x ${h}`)
 
       const ol = await sharp(image.source)
