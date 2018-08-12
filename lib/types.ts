@@ -3,11 +3,13 @@ interface ISubFigure {
   top: number,
   left: number,
   rowspan: number,
-  colspan: number
+  colspan: number,
+  caption?: string
 }
 
-interface IFigureMetadata {
-  output: string
+interface IPanel {
+  output: string,
+  fontSize?: number,
   width: number,
   height: number,
   sizex: number,
@@ -15,12 +17,12 @@ interface IFigureMetadata {
   images: ISubFigure[]
 }
 
-interface IExportSchema {
-  data: IFigureMetadata[]
+interface IDefinition {
+  data: IPanel[]
 }
 
 export {
-  IExportSchema,
-  IFigureMetadata,
+  IDefinition,
+  IPanel,
   ISubFigure
 }

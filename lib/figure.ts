@@ -7,16 +7,16 @@
  */
 
 import * as sharp from 'sharp'
-import { IFigureMetadata } from './IFigureMetadata'
+import { IPanel } from './types'
 
 class Figure {
-  metadata: IFigureMetadata
+  metadata: IPanel
 
   /**
    * Default constructor, prepares the figure panel for generation
    * @param metadata The figure metadata
    */
-  constructor (metadata: IFigureMetadata) {
+  constructor (metadata: IPanel) {
     this.metadata = metadata
   }
 
@@ -63,9 +63,11 @@ class Figure {
         .resize(w, h)
         .background({r: 0, g: 0, b: 0, alpha: 0})
         .embed()
-        .toBuffer()
 
-      const buff = await newSh.overlayWith(ol, {
+      if (image.caption) await this.addCaption(ol, image.caption, this.metadata.fontSize || 32)
+      const olBuff = await ol.toBuffer()
+
+      const buff = await newSh.overlayWith(olBuff, {
         top,
         left
       }).toBuffer()
@@ -74,6 +76,14 @@ class Figure {
     }
 
     return newSh
+  }
+
+  addCaption = async (ol: sharp.SharpInstance, caption: string, fontSize: number) => {
+    const captBuffer = new Buffer(`<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+      <text x="0" y="0" dy="${fontSize}" dominant-baseline="hanging" font-size="${fontSize}" fill="#FFF">${caption}</text>
+    </svg>`)
+
+    await ol.overlayWith(captBuffer, { top: 0, left: 0 })
   }
 
   /**

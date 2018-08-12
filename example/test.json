@@ -6,8 +6,10 @@
       "height": "9",
       "sizex": "100",
       "sizey": "100",
+      "fontSize": "36",
       "images": [
-        { "source": "input.svg", "top": "0", "left": "0", "rowspan": "7", "colspan": "9" },
+        { "source": "input.svg", "top": "0", "left": "0", "rowspan": "1", "colspan": "1", "caption": "A" },
+        { "source": "input.png", "top": "2", "left": "2", "rowspan": "2", "colspan": "3", "caption": "B" },
         { "source": "input.png", "top": "6", "left": "5", "rowspan": "2", "colspan": "3" }
       ]
     }

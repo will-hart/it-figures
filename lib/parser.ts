@@ -13,14 +13,14 @@ import { Chalk } from 'chalk'
 import * as ora from 'ora'
 
 import Figure from './figure'
-import { IFigureMetadata, IExportSchema } from './IFigureMetadata';
+import { IPanel, IDefinition } from './types';
 
 const fsr = promisify(fs.readFile)
 
 class Parser {
   public OnReady : Promise<any>
   schema : Figure[]
-  metadata?: IExportSchema
+  metadata?: IDefinition
 
   constructor(path: string, ch: Chalk) {
     this.schema = []

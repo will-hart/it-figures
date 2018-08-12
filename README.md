@@ -28,7 +28,7 @@ To start with save a `JSON` file, e.g. `figure-a.json`.
           "sizex": "100",
           "sizey": "100",
           "images": [
-            { "source": "input.svg", "top": "0", "left": "0", "rows": "7", "cols": "9" },
+            { "source": "input.svg", "top": "0", "left": "0", "rows": "7", "cols": "9", "caption": "A" },
             { "source": "input.png", "top": "6", "left": "5", "rows": "2", "cols": "3" }
           ]
         }
@@ -73,7 +73,8 @@ can then be placed on the grid and are automatically scaled to fit (with aspect 
 
 The figure panel definition object has the following structure:
 
-- **output: String** the file name including extension where the panel should be exported
+- **output: string** the file name including extension where the panel should be exported
+- **fontSize: Number** (optional, default: 32) the size of font to use for figure captions
 - **width: Number** the width of a single grid item in pixels
 - **height: Number** the height of a single grid item in pixels
 - **sizex: Number** the number of grids in the x-direction
@@ -98,15 +99,16 @@ For example, to create a *1000 x 500* pixel image from a *10 x 10* grid, the fol
 Each panel can have an array of included images (which are essentially sub figures of the panel). The image
 definition object has the following structure:
 
-- **source: String** the path to the input file
+- **source: string** the path to the input file
 - **top: Number** the grid "square" to place the image in, from the top starting at 0
 - **left: Number** the grid "square" to place the image in, from the left starting at 0
 - **rows: Number** the number of rows in the grid that the image should occupy
 - **cols: Number** the number of columns in the grid that the image should occupy
+- **caption: string** (optional, default: no caption) the caption to write for this image (i.e. an "A" for figure A)
 
 > Note that as aspect ratio is preserved, then the sub figure may not occupy an entire grid square as
 > defined by the top/left and rows/cols
 
 ## License
 
-MIT
+MIT. Contributions welcome.
