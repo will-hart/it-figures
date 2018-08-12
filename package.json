@@ -1,6 +1,6 @@
 {
-  "name": "figure",
-  "version": "0.1.0",
+  "name": "figures",
+  "version": "0.1.1",
   "description": "A CLI for building scientific figure panels from raw files using a JSON definition",
   "main": "lib/index.js",
   "preferGlobal": true,

@@ -1,13 +1,13 @@
-# Figure Builder
+# It Figures
 
-`figure` is a node based command line utility for building up figure panels out of multiple images
+`figures` is a node based command line utility for building up figure panels out of multiple images
 that can be used in publications.
 
 ## Installation
 
 It can be installed by:
 
-    npm i -g figure-builder
+    npm i -g it-figures
 
 ## Why?
 
@@ -37,7 +37,7 @@ To start with save a `JSON` file, e.g. `figure-a.json`.
 
 Then in the same directory run
 
-    figure build figure-a.json
+    figures build figure-a.json
 
 Here two images `input.svg` and `input.png` will be combined and exported to `output.png`. See below for more
 details about the data format.
