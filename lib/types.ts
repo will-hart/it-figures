@@ -2,8 +2,8 @@ interface ISubFigure {
   source: string
   top: number
   left: number
-  rowspan: number
-  colspan: number
+  rows: number
+  cols: number
   caption?: string
   offsetx?: number
   offsety?: number

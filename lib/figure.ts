@@ -60,8 +60,8 @@ class Figure {
       const offy = parseInt((image.offsety || 0).toString())
       const top = image.top * this.metadata.sizey
       const left = image.left * this.metadata.sizex
-      const w = image.colspan * this.metadata.sizex
-      const h = image.rowspan * this.metadata.sizey
+      const w = image.cols * this.metadata.sizex
+      const h = image.rows * this.metadata.sizey
       console.log(` --> Overlaying image ${image.source} at {${top}, ${left}} with dimensions ${w} x ${h}`)
 
       const blank = await this.generateBlankCanvas(w + offx, h + offy)
