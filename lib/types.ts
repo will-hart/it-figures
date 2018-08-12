@@ -12,6 +12,7 @@ interface ISubFigure {
 interface IPanel {
   output: string
   fontSize?: number
+  fontFamily?: string
   width: number
   height: number
   sizex: number
