@@ -1,19 +1,21 @@
 interface ISubFigure {
-  source: string,
-  top: number,
-  left: number,
-  rowspan: number,
-  colspan: number,
+  source: string
+  top: number
+  left: number
+  rowspan: number
+  colspan: number
   caption?: string
+  offsetx?: number
+  offsety?: number
 }
 
 interface IPanel {
-  output: string,
-  fontSize?: number,
-  width: number,
-  height: number,
-  sizex: number,
-  sizey: number,
+  output: string
+  fontSize?: number
+  width: number
+  height: number
+  sizex: number
+  sizey: number
   images: ISubFigure[]
 }
 

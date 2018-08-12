@@ -29,7 +29,7 @@ To start with save a `JSON` file, e.g. `figure-a.json`.
           "sizey": "100",
           "images": [
             { "source": "input.svg", "top": "0", "left": "0", "rows": "7", "cols": "9", "caption": "A" },
-            { "source": "input.png", "top": "6", "left": "5", "rows": "2", "cols": "3" }
+            { "source": "input.png", "top": "6", "left": "5", "rows": "2", "cols": "3", "offsety": "20" }
           ]
         }
       ]
@@ -105,6 +105,8 @@ definition object has the following structure:
 - **rows: Number** the number of rows in the grid that the image should occupy
 - **cols: Number** the number of columns in the grid that the image should occupy
 - **caption: string** (optional, default: no caption) the caption to write for this image (i.e. an "A" for figure A)
+- **offsetx: number** (optional, default: 0) the amount to move the image by in the x-direction
+- **offsety: number** (optional, default: 0) the amount to move the image by in the y-direction
 
 > Note that as aspect ratio is preserved, then the sub figure may not occupy an entire grid square as
 > defined by the top/left and rows/cols
