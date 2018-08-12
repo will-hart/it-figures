@@ -1,0 +1,11 @@
+{
+  "name": "figure_builder",
+  "version": "0.1.0",
+  "description": "A package for building up multi-part figure panels from a JSON description file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
