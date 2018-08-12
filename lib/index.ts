@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+
+/**
+ * Figure Builder by William Hart
+ * Provided under the MIT license, 2018
+ *
+ * This file provides the CLI entry point. It parses the JSON files and
+ * generates figure panels accordingly.
+ */
+
+import * as commander from 'commander'
+import * as chalk from 'chalk'
+import * as ora from 'ora'
+
+import Parser from './parser';
+
+const version = '0.1.0'
+const ch = chalk.default
+
+commander
+  .version(version, '-v, --version')
+  .description('A CLI for building scientific figure panels from raw files using a JSON definition')
+
+commander
+  .command('build <input>')
+  .alias('b')
+  .description('Builds a figure panel from the given output panel')
+  // .option('-i, --input', 'The input JSON file to parse')
+  // .option('-o, --output', 'The output image to write')
+  .action((input, opts) => {
+    console.log(ch.bgGreen(ch.black(`FIGURE BUILDER CLI v${version}`)))
+    const p = new Parser(input, ch)
+    p.OnReady.then(async () => {
+      const spinner = ora("Generating images").start()
+      await p.run(ch)
+        .then(() => spinner.stop())
+        .catch(err => {
+          console.log(ch.bgRedBright("Error encountered while generating images!"))
+          console.log(err)
+          spinner.stop()
+        })
+    })
+  })
+
+commander.parse(process.argv)
