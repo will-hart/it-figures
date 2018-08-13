@@ -114,6 +114,13 @@ var SvgGenerator = /** @class */ (function () {
         };
         this.panel = panel;
         this.document = window.document;
+        this.panel.images.forEach(function (image) {
+            if (!image.source.endsWith('.svg'))
+                throw new Error(image.source + " does not appear to be an SVG file. Aborting");
+        });
+        if (!this.panel.output.endsWith('.svg')) {
+            throw new Error("The output path (" + this.panel.output + ") does not appear to be an SVG file. Aborting");
+        }
     }
     return SvgGenerator;
 }());

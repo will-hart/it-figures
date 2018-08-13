@@ -26,6 +26,14 @@ class SvgGenerator {
   constructor (panel: IPanel) {
     this.panel = panel
     this.document = window.document
+
+    this.panel.images.forEach(image => {
+      if (!image.source.endsWith('.svg')) throw new Error(`${image.source} does not appear to be an SVG file. Aborting`)
+    })
+
+    if (!this.panel.output.endsWith('.svg')) {
+      throw new Error(`The output path (${this.panel.output}) does not appear to be an SVG file. Aborting`)
+    }
   }
 
   generate = async () => {
