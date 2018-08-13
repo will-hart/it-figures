@@ -13,7 +13,7 @@ import * as chalk from 'chalk'
 
 import Parser from './parser';
 
-const version = '0.2.0'
+const version = '0.2.1'
 const ch = chalk.default
 
 commander
