@@ -75,6 +75,7 @@ The figure panel definition object has the following structure:
 
 - **output: string** the file name including extension where the panel should be exported
 - **fontSize: Number** (optional, default: 32) the size of font to use for figure captions
+- **mode: string** (option, default: 'DEFAULT') allows selecting different parser modes. See *Parser Modes* below for more details
 - **width: Number** the width of a single grid item in pixels
 - **height: Number** the height of a single grid item in pixels
 - **sizex: Number** the number of grids in the x-direction
@@ -110,6 +111,21 @@ definition object has the following structure:
 
 > Note that as aspect ratio is preserved, then the sub figure may not occupy an entire grid square as
 > defined by the top/left and rows/cols
+
+### Parser Modes
+
+There are currently two supported modes - `DEFAULT` and `SVG`.
+
+#### `DEFAULT` mode
+
+In this mode, all supported input formats are parsed using `sharp`. Text captions are added by embedding SVG,
+with limited font support.
+
+#### `SVG` mode
+
+In SVG mode, all input files must be in SVG format and the output will also be in SVG format
+**regardless of the supplied file extension**. The SVG documents will be positioned, moved and exported
+in a new SVG document using `svg.js` and `svgdom`. Captions will be added as SVG `text` elements.
 
 ## License
 
