@@ -43,6 +43,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var sharp = require("sharp");
+var types_1 = require("./types");
+var svgGenerator_1 = require("./svgGenerator");
 var Figure = /** @class */ (function () {
     /**
      * Default constructor, prepares the figure panel for generation
@@ -56,11 +58,20 @@ var Figure = /** @class */ (function () {
         this.generate = function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.generateBlankCanvas(this.metadata.width * this.metadata.sizex, this.metadata.height * this.metadata.sizey)
-                            .then(this.applySubFigures)
-                            .then(this.writeOutput)
-                            .catch(function (err) { return console.log(err); })];
+                    case 0:
+                        if (!(!this.metadata.mode || this.metadata.mode === types_1.ParserMode.Default)) return [3 /*break*/, 2];
+                        console.log('Generating panel in default mode');
+                        return [4 /*yield*/, this.generateBlankCanvas(this.metadata.width * this.metadata.sizex, this.metadata.height * this.metadata.sizey)
+                                .then(this.applySubFigures)
+                                .then(this.writeOutput)
+                                .catch(function (err) { return console.log(err); })];
                     case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        console.log("Generating panel in " + this.metadata.mode + " mode");
+                        if (this.metadata.mode === types_1.ParserMode.Svg) {
+                            new svgGenerator_1.default(this.metadata).generate();
+                        }
+                        return [2 /*return*/];
                 }
             });
         }); };
@@ -103,9 +114,9 @@ var Figure = /** @class */ (function () {
                         offy = parseInt((image.offsety || 0).toString());
                         top_1 = image.top * this.metadata.sizey;
                         left = image.left * this.metadata.sizex;
-                        w = image.colspan * this.metadata.sizex;
-                        h = image.rowspan * this.metadata.sizey;
-                        console.log(" --> Overlaying image " + image.source + " at {" + top_1 + ", " + left + "} with dimensions " + w + " x " + h);
+                        w = image.cols * this.metadata.sizex;
+                        h = image.rows * this.metadata.sizey;
+                        console.log(" --> Default Generator: " + image.source + " at {" + top_1 + ", " + left + "} with dimensions " + w + " x " + h);
                         return [4 /*yield*/, this.generateBlankCanvas(w + offx, h + offy)];
                     case 2:
                         blank = _b.sent();

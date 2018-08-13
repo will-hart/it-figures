@@ -41,7 +41,7 @@ var commander = require("commander");
 var chalk = require("chalk");
 var ora = require("ora");
 var parser_1 = require("./parser");
-var version = '0.1.0';
+var version = '0.1.1';
 var ch = chalk.default;
 commander
     .version(version, '-v, --version')
@@ -50,10 +50,8 @@ commander
     .command('build <input>')
     .alias('b')
     .description('Builds a figure panel from the given output panel')
-    // .option('-i, --input', 'The input JSON file to parse')
-    // .option('-o, --output', 'The output image to write')
     .action(function (input, opts) {
-    console.log(ch.bgGreen(ch.black("FIGURE BUILDER CLI v" + version)));
+    console.log(ch.bgGreen(ch.black("FIGURE BUILDER CLI " + version)));
     var p = new parser_1.default(input, ch);
     p.OnReady.then(function () { return __awaiter(_this, void 0, void 0, function () {
         var spinner;

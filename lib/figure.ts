@@ -7,7 +7,9 @@
  */
 
 import * as sharp from 'sharp'
-import { IPanel } from './types'
+
+import { IPanel, ParserMode } from './types'
+import SvgGenerator from './svgGenerator'
 
 class Figure {
   metadata: IPanel
@@ -24,13 +26,22 @@ class Figure {
    * Generates a figure panel from the supplied metadata
    */
   generate = async () => {
-    return await this.generateBlankCanvas(
-      this.metadata.width * this.metadata.sizex,
-      this.metadata.height * this.metadata.sizey,
-    )
-      .then(this.applySubFigures)
-      .then(this.writeOutput)
-      .catch(err => console.log(err))
+    if (!this.metadata.mode || this.metadata.mode === ParserMode.Default)
+    {
+      console.log('Generating panel in default mode')
+      return await this.generateBlankCanvas(
+        this.metadata.width * this.metadata.sizex,
+        this.metadata.height * this.metadata.sizey,
+      )
+        .then(this.applySubFigures)
+        .then(this.writeOutput)
+        .catch(err => console.log(err))
+    }
+
+    console.log(`Generating panel in ${this.metadata.mode} mode`)
+    if (this.metadata.mode === ParserMode.Svg) {
+      new SvgGenerator(this.metadata).generate()
+    }
   }
 
   /**
@@ -62,7 +73,7 @@ class Figure {
       const left = image.left * this.metadata.sizex
       const w = image.cols * this.metadata.sizex
       const h = image.rows * this.metadata.sizey
-      console.log(` --> Overlaying image ${image.source} at {${top}, ${left}} with dimensions ${w} x ${h}`)
+      console.log(` --> Default Generator: ${image.source} at {${top}, ${left}} with dimensions ${w} x ${h}`)
 
       const blank = await this.generateBlankCanvas(w + offx, h + offy)
 

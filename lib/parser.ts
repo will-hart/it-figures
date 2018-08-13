@@ -41,7 +41,7 @@ class Parser {
         return rej()
       }
 
-      this.schema = this.metadata.data.map((d: any): Figure => new Figure(d))
+      this.schema = this.metadata.data.map((d: IPanel): Figure => new Figure(d))
 
       spinner.stop()
       return res(true)
