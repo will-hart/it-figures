@@ -1,5 +1,12 @@
 # it-figures changelog
 
+## 0.2.1 [Released 2018-08-13]
+
+### Fixed
+
+- Remove redundant packages
+- Fix README instructions and (hopefully) `package.json` repository field
+
 ## 0.2.0 [Released 2018-08-13]
 
 ### Fixed

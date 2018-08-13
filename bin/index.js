@@ -40,7 +40,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var commander = require("commander");
 var chalk = require("chalk");
 var parser_1 = require("./parser");
-var version = '0.2.0';
+var version = '0.2.1';
 var ch = chalk.default;
 commander
     .version(version, '-v, --version')
