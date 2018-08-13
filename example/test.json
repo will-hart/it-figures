@@ -8,9 +8,22 @@
       "sizey": "100",
       "fontSize": "36",
       "images": [
-        { "source": "input.svg", "top": "0", "left": "0", "rowspan": "1", "colspan": "1", "caption": "A", "offsetx": "50", "offsety": "50" },
-        { "source": "input.png", "top": "2", "left": "2", "rowspan": "3", "colspan": "4", "caption": "B" },
-        { "source": "input.png", "top": "6", "left": "5", "rowspan": "2", "colspan": "3" }
+        { "source": "input.svg", "top": "0", "left": "0", "rows": "1", "cols": "1", "caption": "A", "offsetx": "50", "offsety": "50" },
+        { "source": "input.png", "top": "2", "left": "2", "rows": "3", "cols": "4", "caption": "B" },
+        { "source": "input.png", "top": "6", "left": "5", "rows": "2", "cols": "3" }
+      ]
+    }, {
+      "output": "output.svg",
+      "width": "16",
+      "mode": "SVG",
+      "height": "9",
+      "sizex": "100",
+      "sizey": "100",
+      "fontSize": "36",
+      "images": [
+        { "source": "input.svg", "top": "0", "left": "0", "rows": "1", "cols": "1", "caption": "A", "offsetx": "50", "offsety": "0" },
+        { "source": "input.svg", "top": "2", "left": "2", "rows": "3", "cols": "4", "caption": "B" },
+        { "source": "input.svg", "top": "6", "left": "5", "rows": "2", "cols": "3" }
       ]
     }
   ]
