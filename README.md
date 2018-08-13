@@ -49,13 +49,13 @@ details about the data format.
 `figure` ships as a CLI. Once installed globally, up to date documentation can be viewed by running:
 
 ```shell
-$ figure --help
+$ figures --help
 ```
 
 All of the figure panels defined in the definition file can be built at once by running the `build` command:
 
 ```shell
-$ figure build my_input_file.json
+$ figures build my_input_file.json
 ```
 
 ### Definition Files
