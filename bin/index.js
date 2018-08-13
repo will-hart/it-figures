@@ -39,9 +39,8 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var commander = require("commander");
 var chalk = require("chalk");
-var ora = require("ora");
 var parser_1 = require("./parser");
-var version = '0.1.1';
+var version = '0.2.1';
 var ch = chalk.default;
 commander
     .version(version, '-v, --version')
@@ -54,18 +53,13 @@ commander
     console.log(ch.bgGreen(ch.black("FIGURE BUILDER CLI " + version)));
     var p = new parser_1.default(input, ch);
     p.OnReady.then(function () { return __awaiter(_this, void 0, void 0, function () {
-        var spinner;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    spinner = ora("Generating images").start();
-                    return [4 /*yield*/, p.run(ch)
-                            .then(function () { return spinner.stop(); })
-                            .catch(function (err) {
-                            console.log(ch.bgRedBright("Error encountered while generating images!"));
-                            console.log(err);
-                            spinner.stop();
-                        })];
+                case 0: return [4 /*yield*/, p.run(ch)
+                        .catch(function (err) {
+                        console.log(ch.bgRedBright("Error encountered while generating images!"));
+                        console.log(err);
+                    })];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];

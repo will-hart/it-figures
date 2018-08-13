@@ -44,7 +44,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var util_1 = require("util");
-var ora = require("ora");
 var figure_1 = require("./figure");
 var fsr = util_1.promisify(fs.readFile);
 var Parser = /** @class */ (function () {
@@ -52,25 +51,18 @@ var Parser = /** @class */ (function () {
         var _this = this;
         this.schema = [];
         this.OnReady = new Promise(function (res, rej) { return __awaiter(_this, void 0, void 0, function () {
-            var spinner, contents;
+            var contents;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        spinner = ora("Reading JSON file from " + path).start();
-                        return [4 /*yield*/, fsr(path, 'utf8')];
+                    case 0: return [4 /*yield*/, fsr(path, 'utf8')];
                     case 1:
                         contents = _a.sent();
                         this.metadata = JSON.parse(contents);
-                        spinner.text = 'Validating schema';
-                        // TODO
-                        spinner.text = 'Preparing for export';
                         if (!this.metadata) {
-                            spinner.stop();
                             console.log(ch.red("Unable to parse input file!"));
                             return [2 /*return*/, rej()];
                         }
                         this.schema = this.metadata.data.map(function (d) { return new figure_1.default(d); });
-                        spinner.stop();
                         return [2 /*return*/, res(true)];
                 }
             });

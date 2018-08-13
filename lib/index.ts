@@ -10,11 +10,10 @@
 
 import * as commander from 'commander'
 import * as chalk from 'chalk'
-import * as ora from 'ora'
 
 import Parser from './parser';
 
-const version = '0.2.0'
+const version = '0.2.1'
 const ch = chalk.default
 
 commander
@@ -29,13 +28,10 @@ commander
     console.log(ch.bgGreen(ch.black(`FIGURE BUILDER CLI ${version}`)))
     const p = new Parser(input, ch)
     p.OnReady.then(async () => {
-      const spinner = ora("Generating images").start()
       await p.run(ch)
-        .then(() => spinner.stop())
         .catch(err => {
           console.log(ch.bgRedBright("Error encountered while generating images!"))
           console.log(err)
-          spinner.stop()
         })
     })
   })

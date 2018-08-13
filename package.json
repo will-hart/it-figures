@@ -1,14 +1,14 @@
 {
   "name": "it-figures",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A CLI for building scientific figure panels from raw files using a JSON definition",
   "main": "lib/index.js",
   "preferGlobal": true,
-  "bin": { "figures": "bin/index.js" },
-  "author": "Will Hart <hart.wl@gmail.com>",
-  "repository": {
-    "github": "https://github.com/will-hart/it-figures"
+  "bin": {
+    "figures": "bin/index.js"
   },
+  "author": "Will Hart <hart.wl@gmail.com>",
+  "repository": "github:will-hart/it-figures.git",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
@@ -17,7 +17,6 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.17.1",
-    "ora": "^3.0.0",
     "sharp": "^0.20.5",
     "svg.js": "^2.6.5",
     "svgdom": "^0.0.15"
@@ -26,7 +25,6 @@
     "@types/ora": "^1.3.4",
     "@types/sharp": "^0.17.9",
     "ts-lint": "^4.5.1",
-    "ts-node": "^7.0.1",
     "typescript": "^3.0.1"
   }
 }
