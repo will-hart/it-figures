@@ -23,7 +23,7 @@
       "images": [
         { "source": "input.svg", "top": "0", "left": "0", "rows": "1", "cols": "1", "caption": "A", "offsetx": "50", "offsety": "0" },
         { "source": "input.svg", "top": "2", "left": "2", "rows": "3", "cols": "4", "caption": "B" },
-        { "source": "input.svg", "top": "6", "left": "5", "rows": "2", "cols": "3", "caption": "Z" }
+        { "source": "input.svg", "top": "6", "left": "5", "rows": "2", "cols": "3" }
       ]
     }
   ]

@@ -1,6 +1,11 @@
-// import * as window from 'svgdom'
-// import * as SVG from 'svg.js'
-// SVG(window)
+/**
+ * Figure Builder by William Hart
+ * Provided under the MIT license, 2018
+ *
+ * This file provides the CLI entry point. It parses the JSON files and
+ * generates figure panels accordingly.
+ */
+
 const window   = require('svgdom')
 const SVG      = require('svg.js')(window)
 const document = window.document
@@ -10,7 +15,7 @@ import { Nested, Doc } from 'svg.js'
 import * as fs from 'fs'
 import { promisify } from 'util'
 
-import { IPanel, ISubFigure } from './types';
+import { IPanel, ISubFigure } from '../types';
 
 const fsw = promisify(fs.writeFile)
 
