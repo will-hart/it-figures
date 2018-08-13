@@ -1,3 +1,8 @@
+enum ParserMode {
+  Default = "DEFAULT",
+  Svg = "SVG"
+}
+
 interface ISubFigure {
   source: string
   top: number
@@ -17,6 +22,7 @@ interface IPanel {
   height: number
   sizex: number
   sizey: number
+  mode?: ParserMode
   images: ISubFigure[]
 }
 
@@ -27,5 +33,6 @@ interface IDefinition {
 export {
   IDefinition,
   IPanel,
-  ISubFigure
+  ISubFigure,
+  ParserMode
 }

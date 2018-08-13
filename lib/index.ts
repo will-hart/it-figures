@@ -14,7 +14,7 @@ import * as ora from 'ora'
 
 import Parser from './parser';
 
-const version = '0.1.0'
+const version = '0.1.1'
 const ch = chalk.default
 
 commander
@@ -25,10 +25,8 @@ commander
   .command('build <input>')
   .alias('b')
   .description('Builds a figure panel from the given output panel')
-  // .option('-i, --input', 'The input JSON file to parse')
-  // .option('-o, --output', 'The output image to write')
   .action((input, opts) => {
-    console.log(ch.bgGreen(ch.black(`FIGURE BUILDER CLI v${version}`)))
+    console.log(ch.bgGreen(ch.black(`FIGURE BUILDER CLI ${version}`)))
     const p = new Parser(input, ch)
     p.OnReady.then(async () => {
       const spinner = ora("Generating images").start()

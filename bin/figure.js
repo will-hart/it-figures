@@ -42,7 +42,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var sharp = require("sharp");
+var types_1 = require("./types");
+var generators_1 = require("./generators");
 var Figure = /** @class */ (function () {
     /**
      * Default constructor, prepares the figure panel for generation
@@ -55,116 +56,19 @@ var Figure = /** @class */ (function () {
          */
         this.generate = function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.generateBlankCanvas(this.metadata.width * this.metadata.sizex, this.metadata.height * this.metadata.sizey)
-                            .then(this.applySubFigures)
-                            .then(this.writeOutput)
-                            .catch(function (err) { return console.log(err); })];
-                    case 1: return [2 /*return*/, _a.sent()];
+                if (!this.metadata.mode || this.metadata.mode === types_1.ParserMode.Default) {
+                    console.log('Generating panel in default mode');
+                    return [2 /*return*/, new generators_1.DefaultGenerator(this.metadata).generate()];
                 }
-            });
-        }); };
-        /**
-         * Generates an empty canvas of the specified figure size
-         */
-        this.generateBlankCanvas = function (width, height) { return __awaiter(_this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, sharp(undefined, {
-                            create: {
-                                width: width,
-                                height: height,
-                                channels: 4,
-                                background: { r: 0, g: 0, b: 0, alpha: 0 }
-                            }
-                        }).png()];
-                    case 1: 
-                    // start by creating an empty input buffer in the size of the image
-                    return [2 /*return*/, _a.sent()];
+                console.log("Generating panel in " + this.metadata.mode + " mode");
+                if (this.metadata.mode === types_1.ParserMode.Svg) {
+                    return [2 /*return*/, new generators_1.SvgGenerator(this.metadata).generate()];
                 }
-            });
-        }); };
-        /**
-         * Generates and applies the given subfigures to the passed image
-         * @param sh The SharpInstance being written
-         */
-        this.applySubFigures = function (sh) { return __awaiter(_this, void 0, void 0, function () {
-            var newSh, _i, _a, image, offx, offy, top_1, left, w, h, blank, subfig, imgBuffer, buff;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        newSh = sh;
-                        _i = 0, _a = this.metadata.images;
-                        _b.label = 1;
-                    case 1:
-                        if (!(_i < _a.length)) return [3 /*break*/, 10];
-                        image = _a[_i];
-                        offx = parseInt((image.offsetx || 0).toString());
-                        offy = parseInt((image.offsety || 0).toString());
-                        top_1 = image.top * this.metadata.sizey;
-                        left = image.left * this.metadata.sizex;
-                        w = image.colspan * this.metadata.sizex;
-                        h = image.rowspan * this.metadata.sizey;
-                        console.log(" --> Overlaying image " + image.source + " at {" + top_1 + ", " + left + "} with dimensions " + w + " x " + h);
-                        return [4 /*yield*/, this.generateBlankCanvas(w + offx, h + offy)];
-                    case 2:
-                        blank = _b.sent();
-                        return [4 /*yield*/, sharp(image.source)
-                                .resize(w, h)
-                                .max()
-                                .background({ r: 0, g: 0, b: 0, alpha: 0 })
-                                .embed()
-                                .toBuffer()];
-                    case 3:
-                        subfig = _b.sent();
-                        return [4 /*yield*/, blank.overlayWith(subfig, { top: offy, left: offx }).toBuffer()];
-                    case 4:
-                        imgBuffer = _b.sent();
-                        if (!image.caption) return [3 /*break*/, 6];
-                        return [4 /*yield*/, this.addCaption(imgBuffer, image.caption, this.metadata.fontSize || 32, this.metadata.fontFamily || 'Open Sans')];
-                    case 5:
-                        imgBuffer = _b.sent();
-                        _b.label = 6;
-                    case 6: return [4 /*yield*/, newSh.overlayWith(imgBuffer, {
-                            top: top_1,
-                            left: left
-                        }).toBuffer()];
-                    case 7:
-                        buff = _b.sent();
-                        return [4 /*yield*/, sharp(buff)];
-                    case 8:
-                        newSh = _b.sent();
-                        _b.label = 9;
-                    case 9:
-                        _i++;
-                        return [3 /*break*/, 1];
-                    case 10: return [2 /*return*/, newSh];
+                else {
+                    console.log("Unknown generation mode: " + this.metadata.mode + ". No export will be created.");
+                    return [2 /*return*/];
                 }
-            });
-        }); };
-        this.addCaption = function (buf, caption, fontSize, font) { return __awaiter(_this, void 0, void 0, function () {
-            var captBuffer;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        captBuffer = new Buffer("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\">\n      <style>.c { font-family: \"" + font + "\" }</style>\n      <text class=\"c\" x=\"0\" y=\"0\" dy=\"" + fontSize + "\" font-size=\"" + fontSize + "\" fill=\"#000\">" + caption + "</text>\n    </svg>");
-                        return [4 /*yield*/, sharp(buf).overlayWith(captBuffer, { top: 0, left: 0 }).toBuffer()];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        }); };
-        /**
-         * Writes the generated figure panel out to file
-         * @param sh The SharpInstance being written
-         */
-        this.writeOutput = function (sh) { return __awaiter(_this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, sh.toFile(this.metadata.output)
-                            .then(function () { return true; })
-                            .catch(function (err) { return console.log(err); })];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
+                return [2 /*return*/];
             });
         }); };
         this.metadata = metadata;
