@@ -14,7 +14,7 @@ import * as ora from 'ora'
 
 import Parser from './parser';
 
-const version = '0.1.1'
+const version = '0.2.0'
 const ch = chalk.default
 
 commander

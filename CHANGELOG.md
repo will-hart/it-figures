@@ -1,6 +1,6 @@
 # it-figures changelog
 
-## 0.2.0 [Unreleased]
+## 0.2.0 [Released 2018-08-13]
 
 ### Fixed
 
