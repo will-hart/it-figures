@@ -4,7 +4,7 @@
   "description": "A CLI for building scientific figure panels from raw files using a JSON definition",
   "main": "lib/index.js",
   "preferGlobal": true,
-  "bin": "bin/index.js",
+  "bin": { "figures": "bin/index.js" },
   "author": "Will Hart <hart.wl@gmail.com>",
   "repository": {
     "github": "https://github.com/will-hart/it-figures"

@@ -5,6 +5,7 @@
 ### Fixed
 
 - npm package naming
+- Fixed incorrect binary name
 
 ### Changed
 
