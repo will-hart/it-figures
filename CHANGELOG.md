@@ -1,5 +1,13 @@
 # it-figures changelog
 
+## 0.3.0 [Released 2018-10-16]
+
+### Added
+
+- Generation now runs synchronously by default. This is due to a [long standing bug in cairo](https://gitlab.freedesktop.org/cairo/cairo/issues/190).
+- `async` command option, allowing building asynchronously
+- Various dependency updates
+
 ## 0.2.1 [Released 2018-08-13]
 
 ### Fixed
