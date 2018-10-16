@@ -13,8 +13,21 @@ import * as chalk from 'chalk'
 
 import Parser from './parser';
 
-const version = '0.2.1'
+const version = '0.3.0'
 const ch = chalk.default
+
+// Performs the file processing
+const processFile = (input: any, opts: any, async: boolean) => {
+  console.log(ch.bgGreen(ch.black(`FIGURE BUILDER CLI ${version}`)))
+  const p = new Parser(input, ch)
+  p.OnReady.then(async () => {
+    await p.run(ch, async)
+      .catch(err => {
+        console.log(ch.bgRedBright("Error encountered while generating images!"))
+        console.log(err)
+      })
+  })
+}
 
 commander
   .version(version, '-v, --version')
@@ -24,16 +37,13 @@ commander
   .command('build <input>')
   .alias('b')
   .description('Builds a figure panel from the given output panel')
-  .action((input, opts) => {
-    console.log(ch.bgGreen(ch.black(`FIGURE BUILDER CLI ${version}`)))
-    const p = new Parser(input, ch)
-    p.OnReady.then(async () => {
-      await p.run(ch)
-        .catch(err => {
-          console.log(ch.bgRedBright("Error encountered while generating images!"))
-          console.log(err)
-        })
-    })
-  })
+  .action((input: any, opts: any) => processFile(input, opts, false))
+
+commander
+  .command('build-async <input>')
+  .alias('a')
+  .description('Builds a figure panel from the given output panel asynchronously (may have some issues with fonts on Windows)')
+  .action((input: any, opts: any) => processFile(input, opts, true))
 
 commander.parse(process.argv)
+

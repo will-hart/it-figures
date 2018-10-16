@@ -42,6 +42,14 @@ Then in the same directory run
 Here two images `input.svg` and `input.png` will be combined and exported to `output.png`. See below for more
 details about the data format.
 
+> **NOTE**
+> This will build synchronously, which helps reduce some font detection issues in `cairo` on the Windows platform.
+> If you are on another platform or don't use captions, the `async` version of this command may run a little faster.
+> ```
+> figures async figure-a.json
+> ```
+>
+
 ## Documentation
 
 ### CLI

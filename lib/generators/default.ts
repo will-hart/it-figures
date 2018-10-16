@@ -105,7 +105,7 @@ class DefaultGenerator {
   writeOutput = async (sh: sharp.SharpInstance) => {
     return await sh.toFile(this.panel.output)
       .then(() => true)
-      .catch(err => console.log(err))
+      .catch((err: any) => console.log(err))
   }
 }
 

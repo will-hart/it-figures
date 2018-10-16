@@ -40,22 +40,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var commander = require("commander");
 var chalk = require("chalk");
 var parser_1 = require("./parser");
-var version = '0.2.1';
+var version = '0.3.0';
 var ch = chalk.default;
-commander
-    .version(version, '-v, --version')
-    .description('A CLI for building scientific figure panels from raw files using a JSON definition');
-commander
-    .command('build <input>')
-    .alias('b')
-    .description('Builds a figure panel from the given output panel')
-    .action(function (input, opts) {
+// Performs the file processing
+var processFile = function (input, opts, async) {
     console.log(ch.bgGreen(ch.black("FIGURE BUILDER CLI " + version)));
     var p = new parser_1.default(input, ch);
     p.OnReady.then(function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, p.run(ch)
+                case 0: return [4 /*yield*/, p.run(ch, async)
                         .catch(function (err) {
                         console.log(ch.bgRedBright("Error encountered while generating images!"));
                         console.log(err);
@@ -66,5 +60,18 @@ commander
             }
         });
     }); });
-});
+};
+commander
+    .version(version, '-v, --version')
+    .description('A CLI for building scientific figure panels from raw files using a JSON definition');
+commander
+    .command('build <input>')
+    .alias('b')
+    .description('Builds a figure panel from the given output panel')
+    .action(function (input, opts) { return processFile(input, opts, false); });
+commander
+    .command('build-async <input>')
+    .alias('a')
+    .description('Builds a figure panel from the given output panel asynchronously (may have some issues with fonts on Windows)')
+    .action(function (input, opts) { return processFile(input, opts, true); });
 commander.parse(process.argv);
