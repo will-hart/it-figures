@@ -68,25 +68,46 @@ var Parser = /** @class */ (function () {
             });
         }); });
     }
-    Parser.prototype.run = function (ch) {
+    Parser.prototype.run = function (ch, runAsync) {
         return __awaiter(this, void 0, void 0, function () {
+            var _i, _a, fig;
             var _this = this;
-            return __generator(this, function (_a) {
-                if (!this.metadata) {
-                    console.log(ch.red("Unable to generate figures - no metadata defined"));
-                    return [2 /*return*/];
-                }
-                this.schema.forEach(function (fig) { return __awaiter(_this, void 0, void 0, function () {
-                    return __generator(this, function (_a) {
-                        switch (_a.label) {
-                            case 0: return [4 /*yield*/, fig.generate()];
-                            case 1:
-                                _a.sent();
-                                return [2 /*return*/];
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        if (!this.metadata) {
+                            console.log(ch.red("Unable to generate figures - no metadata defined"));
+                            return [2 /*return*/];
                         }
-                    });
-                }); });
-                return [2 /*return*/];
+                        if (!runAsync) return [3 /*break*/, 1];
+                        console.log('Running build asynchronously. This may cause font issues on Windows.');
+                        this.schema.forEach(function (fig) { return __awaiter(_this, void 0, void 0, function () {
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0: return [4 /*yield*/, fig.generate()];
+                                    case 1:
+                                        _a.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }); });
+                        return [3 /*break*/, 5];
+                    case 1:
+                        _i = 0, _a = this.schema;
+                        _b.label = 2;
+                    case 2:
+                        if (!(_i < _a.length)) return [3 /*break*/, 5];
+                        fig = _a[_i];
+                        console.log("### Processing " + fig.metadata.output);
+                        return [4 /*yield*/, fig.generate()];
+                    case 3:
+                        _b.sent();
+                        _b.label = 4;
+                    case 4:
+                        _i++;
+                        return [3 /*break*/, 2];
+                    case 5: return [2 /*return*/];
+                }
             });
         });
     };

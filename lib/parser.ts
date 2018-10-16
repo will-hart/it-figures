@@ -9,7 +9,7 @@
 import * as fs from 'fs'
 import { promisify } from 'util'
 
-import { Chalk } from 'chalk'
+import * as Chalk from 'chalk'
 
 import Figure from './figure'
 import { IPanel, IDefinition } from './types';
@@ -21,7 +21,7 @@ class Parser {
   schema : Figure[]
   metadata?: IDefinition
 
-  constructor(path: string, ch: Chalk) {
+  constructor(path: string, ch: Chalk.Chalk) {
     this.schema = []
 
     this.OnReady = new Promise(async (res, rej) => {
@@ -37,15 +37,23 @@ class Parser {
     })
   }
 
-  async run(ch: Chalk) {
+  async run(ch: Chalk.Chalk, runAsync: boolean) {
     if (!this.metadata) {
       console.log(ch.red("Unable to generate figures - no metadata defined"))
       return
     }
 
-    this.schema.forEach(async (fig: Figure) => {
-      await fig.generate()
-    })
+    if (runAsync) {
+      console.log('Running build asynchronously. This may cause font issues on Windows.')
+      this.schema.forEach(async (fig: Figure) => {
+        await fig.generate()
+      })
+    } else {
+      for (const fig of this.schema) {
+        console.log(`### Processing ${fig.metadata.output}`)
+        await fig.generate()
+      }
+    }
   }
 }
 
