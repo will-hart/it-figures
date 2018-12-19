@@ -36,19 +36,19 @@ class SvgGenerator {
     }
   }
 
-  generate = async () => {
+  generate = async (silent: boolean) => {
     const canvas = this.generateCanvas(
       this.panel.sizex * this.panel.width,
       this.panel.sizey * this.panel.height
     )
 
     if (this.panel.images.length === 0) {
-      console.log("No images in panel, aborting")
+      if (!silent) console.log("No images in panel, aborting")
       return
     }
 
     this.panel.images.forEach((image: ISubFigure) => {
-      console.log(` --> SVG Generator - ${image.source}`)
+      if (!silent) console.log(` --> SVG Generator - ${image.source}`)
 
       // create a group and throw the imported svg into it
       const svg = fs.readFileSync(image.source, 'utf8');

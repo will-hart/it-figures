@@ -17,12 +17,12 @@ class DefaultGenerator {
     this.panel = metadata
   }
 
-  generate = async () => {
+  generate = async (silent: boolean) => {
     return await this.generateBlankCanvas(
       this.panel.width * this.panel.sizex,
       this.panel.height * this.panel.sizey,
     )
-      .then(this.applySubFigures)
+      .then(sh => this.applySubFigures(sh, silent))
       .then(this.writeOutput)
       .catch(err => console.log(err))
   }
@@ -46,7 +46,7 @@ class DefaultGenerator {
    * Generates and applies the given subfigures to the passed image
    * @param sh The SharpInstance being written
    */
-  applySubFigures = async (sh: sharp.SharpInstance) => {
+  applySubFigures = async (sh: sharp.SharpInstance, silent: boolean) => {
     let newSh = sh
 
     for (const image of this.panel.images) {
@@ -56,7 +56,7 @@ class DefaultGenerator {
       const left = image.left * this.panel.sizex
       const w = image.cols * this.panel.sizex
       const h = image.rows * this.panel.sizey
-      console.log(` --> Default Generator: ${image.source} at {${top}, ${left}} with dimensions ${w} x ${h}`)
+      if (!silent) console.log(` --> Default Generator: ${image.source} at {${top}, ${left}} with dimensions ${w} x ${h}`)
 
       const blank = await this.generateBlankCanvas(w + offx, h + offy)
 

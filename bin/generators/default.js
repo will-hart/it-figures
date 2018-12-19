@@ -46,11 +46,12 @@ var sharp = require("sharp");
 var DefaultGenerator = /** @class */ (function () {
     function DefaultGenerator(metadata) {
         var _this = this;
-        this.generate = function () { return __awaiter(_this, void 0, void 0, function () {
+        this.generate = function (silent) { return __awaiter(_this, void 0, void 0, function () {
+            var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.generateBlankCanvas(this.panel.width * this.panel.sizex, this.panel.height * this.panel.sizey)
-                            .then(this.applySubFigures)
+                            .then(function (sh) { return _this.applySubFigures(sh, silent); })
                             .then(this.writeOutput)
                             .catch(function (err) { return console.log(err); })];
                     case 1: return [2 /*return*/, _a.sent()];
@@ -81,7 +82,7 @@ var DefaultGenerator = /** @class */ (function () {
          * Generates and applies the given subfigures to the passed image
          * @param sh The SharpInstance being written
          */
-        this.applySubFigures = function (sh) { return __awaiter(_this, void 0, void 0, function () {
+        this.applySubFigures = function (sh, silent) { return __awaiter(_this, void 0, void 0, function () {
             var newSh, _i, _a, image, offx, offy, top_1, left, w, h, blank, subfig, imgBuffer, buff;
             return __generator(this, function (_b) {
                 switch (_b.label) {
@@ -98,7 +99,8 @@ var DefaultGenerator = /** @class */ (function () {
                         left = image.left * this.panel.sizex;
                         w = image.cols * this.panel.sizex;
                         h = image.rows * this.panel.sizey;
-                        console.log(" --> Default Generator: " + image.source + " at {" + top_1 + ", " + left + "} with dimensions " + w + " x " + h);
+                        if (!silent)
+                            console.log(" --> Default Generator: " + image.source + " at {" + top_1 + ", " + left + "} with dimensions " + w + " x " + h);
                         return [4 /*yield*/, this.generateBlankCanvas(w + offx, h + offy)];
                     case 2:
                         blank = _b.sent();

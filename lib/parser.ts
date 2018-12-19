@@ -44,12 +44,12 @@ class Parser {
     if (runAsync) {
       if (!this.silent) console.log('Running build asynchronously. This may cause font issues on Windows.')
       this.schema.forEach(async (fig: Figure) => {
-        await fig.generate()
+        await fig.generate(this.silent)
       })
     } else {
       for (const fig of this.schema) {
         if (!this.silent) console.log(`### Processing ${fig.metadata.output}`)
-        await fig.generate()
+        await fig.generate(this.silent)
       }
     }
   }

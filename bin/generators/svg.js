@@ -51,7 +51,7 @@ var fsw = util_1.promisify(fs.writeFile);
 var SvgGenerator = /** @class */ (function () {
     function SvgGenerator(panel) {
         var _this = this;
-        this.generate = function () { return __awaiter(_this, void 0, void 0, function () {
+        this.generate = function (silent) { return __awaiter(_this, void 0, void 0, function () {
             var canvas;
             var _this = this;
             return __generator(this, function (_a) {
@@ -59,11 +59,13 @@ var SvgGenerator = /** @class */ (function () {
                     case 0:
                         canvas = this.generateCanvas(this.panel.sizex * this.panel.width, this.panel.sizey * this.panel.height);
                         if (this.panel.images.length === 0) {
-                            console.log("No images in panel, aborting");
+                            if (!silent)
+                                console.log("No images in panel, aborting");
                             return [2 /*return*/];
                         }
                         this.panel.images.forEach(function (image) {
-                            console.log(" --> SVG Generator - " + image.source);
+                            if (!silent)
+                                console.log(" --> SVG Generator - " + image.source);
                             // create a group and throw the imported svg into it
                             var svg = fs.readFileSync(image.source, 'utf8');
                             var g = canvas.nested().svg(svg);
