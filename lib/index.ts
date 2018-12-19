@@ -19,9 +19,9 @@ const ch = chalk.default
 // Performs the file processing
 const processFile = (input: any, opts: any, async: boolean) => {
   console.log(ch.bgGreen(ch.black(`FIGURE BUILDER CLI ${version}`)))
-  const p = new Parser(input, ch)
+  const p = new Parser(input, false)
   p.OnReady.then(async () => {
-    await p.run(ch, async)
+    await p.run(async)
       .catch(err => {
         console.log(ch.bgRedBright("Error encountered while generating images!"))
         console.log(err)

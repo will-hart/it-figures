@@ -45,11 +45,11 @@ var ch = chalk.default;
 // Performs the file processing
 var processFile = function (input, opts, async) {
     console.log(ch.bgGreen(ch.black("FIGURE BUILDER CLI " + version)));
-    var p = new parser_1.default(input, ch);
+    var p = new parser_1.default(input, false);
     p.OnReady.then(function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, p.run(ch, async)
+                case 0: return [4 /*yield*/, p.run(async)
                         .catch(function (err) {
                         console.log(ch.bgRedBright("Error encountered while generating images!"));
                         console.log(err);

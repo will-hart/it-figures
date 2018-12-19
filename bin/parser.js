@@ -47,10 +47,11 @@ var util_1 = require("util");
 var figure_1 = require("./figure");
 var fsr = util_1.promisify(fs.readFile);
 var Parser = /** @class */ (function () {
-    function Parser(path, ch) {
+    function Parser(path, silent) {
         var _this = this;
         this.schema = [];
-        this.OnReady = new Promise(function (res, rej) { return __awaiter(_this, void 0, void 0, function () {
+        this.silent = silent;
+        this.OnReady = new Promise(function (res) { return __awaiter(_this, void 0, void 0, function () {
             var contents;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -59,8 +60,7 @@ var Parser = /** @class */ (function () {
                         contents = _a.sent();
                         this.metadata = JSON.parse(contents);
                         if (!this.metadata) {
-                            console.log(ch.red("Unable to parse input file!"));
-                            return [2 /*return*/, rej()];
+                            throw new Error("Unable to parse input file!");
                         }
                         this.schema = this.metadata.data.map(function (d) { return new figure_1.default(d); });
                         return [2 /*return*/, res(true)];
@@ -68,7 +68,7 @@ var Parser = /** @class */ (function () {
             });
         }); });
     }
-    Parser.prototype.run = function (ch, runAsync) {
+    Parser.prototype.run = function (runAsync) {
         return __awaiter(this, void 0, void 0, function () {
             var _i, _a, fig;
             var _this = this;
@@ -76,11 +76,11 @@ var Parser = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         if (!this.metadata) {
-                            console.log(ch.red("Unable to generate figures - no metadata defined"));
-                            return [2 /*return*/];
+                            throw new Error("Unable to generate figures - no metadata defined");
                         }
                         if (!runAsync) return [3 /*break*/, 1];
-                        console.log('Running build asynchronously. This may cause font issues on Windows.');
+                        if (!this.silent)
+                            console.log('Running build asynchronously. This may cause font issues on Windows.');
                         this.schema.forEach(function (fig) { return __awaiter(_this, void 0, void 0, function () {
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
@@ -98,7 +98,8 @@ var Parser = /** @class */ (function () {
                     case 2:
                         if (!(_i < _a.length)) return [3 /*break*/, 5];
                         fig = _a[_i];
-                        console.log("### Processing " + fig.metadata.output);
+                        if (!this.silent)
+                            console.log("### Processing " + fig.metadata.output);
                         return [4 /*yield*/, fig.generate()];
                     case 3:
                         _b.sent();
