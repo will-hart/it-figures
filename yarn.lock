@@ -2,13 +2,19 @@
 # yarn lockfile v1
 
 
-"@types/node@*", "@types/node@^10.12.0":
+"@types/node@*":
   version "10.12.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.0.tgz#ea6dcbddbc5b584c83f06c60e82736d8fbb0c235"
 
-"@types/sharp@^0.20.5":
+"@types/node@^10.12.17":
+  version "10.12.17"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.17.tgz#7040565b2c93d59325a68fa69073e754a7eda93a"
+  integrity sha512-umSCRkjWH70uNzFiOof5yxCqrMXIBJ9UJJUzbEsmtWt8apURQh06pylGMqnhdjHGJSeoBrhzk+mibu6NgL1oBA==
+
+"@types/sharp@^0.17.10":
   version "0.17.10"
   resolved "https://registry.yarnpkg.com/@types/sharp/-/sharp-0.17.10.tgz#4f546861c53fae2b1bffcdd1ae7e691cc68afa52"
+  integrity sha512-nISitptrYm6hUpiC+vN21cbT8Of54TubXY95N+pcqNCmmXZqd1hRk7fC5HYRRQwWJiKV/NLHx8f4CxPIsIQXqg==
   dependencies:
     "@types/node" "*"
 
@@ -212,9 +218,10 @@ colors@^1.1.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.3.2.tgz#2df8ff573dfbf255af562f8ce7181d6b971a359b"
 
-commander@^2.17.1:
+commander@^2.19.0:
   version "2.19.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"
+  integrity sha512-6tvAOO+D6OENvRAh524Dh9jcfKTYDQAqvqezbCW82xj5X0pSrcpxtvRKHLG0yBY6SD7PSDrJaj+0AiOcKVd1Xg==
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -777,9 +784,10 @@ shallow-copy@~0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/shallow-copy/-/shallow-copy-0.0.1.tgz#415f42702d73d810330292cc5ee86eae1a11a170"
 
-sharp@^0.20.5:
+sharp@^0.20.8:
   version "0.20.8"
   resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.20.8.tgz#e853f10b53b730824f0c3c5e453c79fa0812a48b"
+  integrity sha512-A8NaPGWRDKpmHTi8sl2xzozYXhTQWBb/GaJ8ZPU7L/vKW8wVvd4Yq+isJ0c7p9sX5gnjPQcM3eOfHuvvnZ2fOQ==
   dependencies:
     color "^3.0.0"
     detect-libc "^1.0.3"
@@ -900,9 +908,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-svg.js@^2.6.6:
-  version "2.6.6"
-  resolved "https://registry.yarnpkg.com/svg.js/-/svg.js-2.6.6.tgz#27e9ada6231d0d35ded2c5252f52f19101104ed8"
+svg.js@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/svg.js/-/svg.js-2.7.1.tgz#eb977ed4737001eab859949b4a398ee1bb79948d"
+  integrity sha512-ycbxpizEQktk3FYvn/8BH+6/EuWXg7ZpQREJvgacqn46gIddG24tNNe4Son6omdXCnSOaApnpZw6MPCBA1dODA==
 
 svgdom@^0.0.15:
   version "0.0.15"
@@ -998,9 +1007,10 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^3.1.3:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.1.3.tgz#01b70247a6d3c2467f70c45795ef5ea18ce191d5"
+typescript@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.2.tgz#fe8101c46aa123f8353523ebdcf5730c2ae493e5"
+  integrity sha512-VCj5UiSyHBjwfYacmDuc/NOk4QQixbE+Wn7MFJuS0nRuPQbof132Pw4u53dm264O8LPc2MVsc7RJNml5szurkg==
 
 unicode-properties@^1.0.0:
   version "1.1.0"
