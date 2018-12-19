@@ -1,5 +1,10 @@
 # it-figures changelog
 
+## 0.4.2 [Released 2018-12-19]
+
+- Updated dependencies
+- Allowed overriding current working directory
+
 ## 0.4.1 [Released 2018-12-19]
 
 - Removed more console logging in silent mode
