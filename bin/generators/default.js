@@ -42,16 +42,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var path = require("path");
 var sharp = require("sharp");
 var DefaultGenerator = /** @class */ (function () {
     function DefaultGenerator(metadata) {
         var _this = this;
-        this.generate = function () { return __awaiter(_this, void 0, void 0, function () {
+        this.generate = function (root, silent) { return __awaiter(_this, void 0, void 0, function () {
+            var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.generateBlankCanvas(this.panel.width * this.panel.sizex, this.panel.height * this.panel.sizey)
-                            .then(this.applySubFigures)
-                            .then(this.writeOutput)
+                            .then(function (sh) { return _this.applySubFigures(sh, root, silent); })
+                            .then(function (sh) { return _this.writeOutput(sh, root); })
                             .catch(function (err) { return console.log(err); })];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
@@ -81,8 +83,8 @@ var DefaultGenerator = /** @class */ (function () {
          * Generates and applies the given subfigures to the passed image
          * @param sh The SharpInstance being written
          */
-        this.applySubFigures = function (sh) { return __awaiter(_this, void 0, void 0, function () {
-            var newSh, _i, _a, image, offx, offy, top_1, left, w, h, blank, subfig, imgBuffer, buff;
+        this.applySubFigures = function (sh, root, silent) { return __awaiter(_this, void 0, void 0, function () {
+            var newSh, _i, _a, image, offx, offy, top_1, left, w, h, srcPath, blank, subfig, imgBuffer, buff;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -98,11 +100,13 @@ var DefaultGenerator = /** @class */ (function () {
                         left = image.left * this.panel.sizex;
                         w = image.cols * this.panel.sizex;
                         h = image.rows * this.panel.sizey;
-                        console.log(" --> Default Generator: " + image.source + " at {" + top_1 + ", " + left + "} with dimensions " + w + " x " + h);
+                        srcPath = path.join(root, image.source);
+                        if (!silent)
+                            console.log(" --> Default Generator: " + srcPath + " at {" + top_1 + ", " + left + "} with dimensions " + w + " x " + h);
                         return [4 /*yield*/, this.generateBlankCanvas(w + offx, h + offy)];
                     case 2:
                         blank = _b.sent();
-                        return [4 /*yield*/, sharp(image.source)
+                        return [4 /*yield*/, sharp(srcPath)
                                 .resize(w, h)
                                 .max()
                                 .background({ r: 0, g: 0, b: 0, alpha: 0 })
@@ -140,7 +144,7 @@ var DefaultGenerator = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        captBuffer = new Buffer("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\">\n      <style>.c { font-family: \"" + font + "\" }</style>\n      <text class=\"c\" x=\"0\" y=\"0\" dy=\"" + fontSize + "\" font-size=\"" + fontSize + "\" fill=\"#000\">" + caption + "</text>\n    </svg>");
+                        captBuffer = new Buffer("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\">\n      <style>.c { font-family: " + font + " }</style>\n      <text class=\"c\" x=\"0\" y=\"0\" dy=\"" + fontSize + "\" font-size=\"" + fontSize + "\" fill=\"#000\">" + caption + "</text>\n    </svg>");
                         return [4 /*yield*/, sharp(buf).overlayWith(captBuffer, { top: 0, left: 0 }).toBuffer()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
@@ -150,12 +154,15 @@ var DefaultGenerator = /** @class */ (function () {
          * Writes the generated figure panel out to file
          * @param sh The SharpInstance being written
          */
-        this.writeOutput = function (sh) { return __awaiter(_this, void 0, void 0, function () {
+        this.writeOutput = function (sh, root) { return __awaiter(_this, void 0, void 0, function () {
+            var outPath;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, sh.toFile(this.panel.output)
-                            .then(function () { return true; })
-                            .catch(function (err) { return console.log(err); })];
+                    case 0:
+                        outPath = path.join(root, this.panel.output);
+                        return [4 /*yield*/, sh.toFile(outPath)
+                                .then(function () { return true; })
+                                .catch(function (err) { return console.log(err); })];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

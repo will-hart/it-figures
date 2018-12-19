@@ -6,6 +6,7 @@
  * generates figure panels accordingly.
  */
 
+import * as path from 'path'
 import * as sharp from 'sharp'
 
 import { IPanel } from "../types";
@@ -17,13 +18,13 @@ class DefaultGenerator {
     this.panel = metadata
   }
 
-  generate = async () => {
+  generate = async (root: string, silent: boolean) => {
     return await this.generateBlankCanvas(
       this.panel.width * this.panel.sizex,
       this.panel.height * this.panel.sizey,
     )
-      .then(this.applySubFigures)
-      .then(this.writeOutput)
+      .then(sh => this.applySubFigures(sh, root, silent))
+      .then(sh => this.writeOutput(sh, root))
       .catch(err => console.log(err))
   }
 
@@ -46,7 +47,7 @@ class DefaultGenerator {
    * Generates and applies the given subfigures to the passed image
    * @param sh The SharpInstance being written
    */
-  applySubFigures = async (sh: sharp.SharpInstance) => {
+  applySubFigures = async (sh: sharp.SharpInstance, root: string, silent: boolean) => {
     let newSh = sh
 
     for (const image of this.panel.images) {
@@ -56,11 +57,12 @@ class DefaultGenerator {
       const left = image.left * this.panel.sizex
       const w = image.cols * this.panel.sizex
       const h = image.rows * this.panel.sizey
-      console.log(` --> Default Generator: ${image.source} at {${top}, ${left}} with dimensions ${w} x ${h}`)
+      const srcPath = path.join(root, image.source)
+      if (!silent) console.log(` --> Default Generator: ${srcPath} at {${top}, ${left}} with dimensions ${w} x ${h}`)
 
       const blank = await this.generateBlankCanvas(w + offx, h + offy)
 
-      const subfig = await sharp(image.source)
+      const subfig = await sharp(srcPath)
         .resize(w, h)
         .max()
         .background({r: 0, g: 0, b: 0, alpha: 0})
@@ -91,7 +93,7 @@ class DefaultGenerator {
 
   addCaption = async (buf: Buffer, caption: string, fontSize: number, font: string) => {
     const captBuffer = new Buffer(`<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-      <style>.c { font-family: "${font}" }</style>
+      <style>.c { font-family: ${font} }</style>
       <text class="c" x="0" y="0" dy="${fontSize}" font-size="${fontSize}" fill="#000">${caption}</text>
     </svg>`)
 
@@ -102,8 +104,9 @@ class DefaultGenerator {
    * Writes the generated figure panel out to file
    * @param sh The SharpInstance being written
    */
-  writeOutput = async (sh: sharp.SharpInstance) => {
-    return await sh.toFile(this.panel.output)
+  writeOutput = async (sh: sharp.SharpInstance, root: string) => {
+    const outPath = path.join(root, this.panel.output)
+    return await sh.toFile(outPath)
       .then(() => true)
       .catch((err: any) => console.log(err))
   }

@@ -47,10 +47,11 @@ var util_1 = require("util");
 var figure_1 = require("./figure");
 var fsr = util_1.promisify(fs.readFile);
 var Parser = /** @class */ (function () {
-    function Parser(path, silent) {
+    function Parser(path, silent, root) {
         var _this = this;
         this.schema = [];
         this.silent = silent;
+        this.root = root || process.cwd();
         this.OnReady = new Promise(function (res) { return __awaiter(_this, void 0, void 0, function () {
             var contents;
             return __generator(this, function (_a) {
@@ -84,7 +85,7 @@ var Parser = /** @class */ (function () {
                         this.schema.forEach(function (fig) { return __awaiter(_this, void 0, void 0, function () {
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
-                                    case 0: return [4 /*yield*/, fig.generate()];
+                                    case 0: return [4 /*yield*/, fig.generate(this.root, this.silent)];
                                     case 1:
                                         _a.sent();
                                         return [2 /*return*/];
@@ -100,7 +101,7 @@ var Parser = /** @class */ (function () {
                         fig = _a[_i];
                         if (!this.silent)
                             console.log("### Processing " + fig.metadata.output);
-                        return [4 /*yield*/, fig.generate()];
+                        return [4 /*yield*/, fig.generate(this.root, this.silent)];
                     case 3:
                         _b.sent();
                         _b.label = 4;

@@ -13,7 +13,7 @@ import * as chalk from 'chalk'
 
 import Parser from './parser';
 
-const version = '0.4.1'
+const version = '0.4.2'
 const ch = chalk.default
 
 // Performs the file processing

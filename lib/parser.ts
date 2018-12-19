@@ -18,11 +18,13 @@ class Parser {
   public OnReady : Promise<any>
   schema : Figure[]
   metadata?: IDefinition
+  root: string
   silent: boolean
 
-  constructor(path: string, silent: boolean) {
+  constructor(path: string, silent: boolean, root?: string) {
     this.schema = []
     this.silent = silent
+    this.root = root || process.cwd()
 
     this.OnReady = new Promise(async (res) => {
       const contents = await fsr(path, 'utf8')
@@ -44,12 +46,12 @@ class Parser {
     if (runAsync) {
       if (!this.silent) console.log('Running build asynchronously. This may cause font issues on Windows.')
       this.schema.forEach(async (fig: Figure) => {
-        await fig.generate()
+        await fig.generate(this.root, this.silent)
       })
     } else {
       for (const fig of this.schema) {
         if (!this.silent) console.log(`### Processing ${fig.metadata.output}`)
-        await fig.generate()
+        await fig.generate(this.root, this.silent)
       }
     }
   }
