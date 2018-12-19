@@ -9,8 +9,6 @@
 import * as fs from 'fs'
 import { promisify } from 'util'
 
-import * as Chalk from 'chalk'
-
 import Figure from './figure'
 import { IPanel, IDefinition } from './types';
 
@@ -20,16 +18,17 @@ class Parser {
   public OnReady : Promise<any>
   schema : Figure[]
   metadata?: IDefinition
+  silent: boolean
 
-  constructor(path: string, ch: Chalk.Chalk) {
+  constructor(path: string, silent: boolean) {
     this.schema = []
+    this.silent = silent
 
-    this.OnReady = new Promise(async (res, rej) => {
+    this.OnReady = new Promise(async (res) => {
       const contents = await fsr(path, 'utf8')
       this.metadata = JSON.parse(contents)
       if (!this.metadata) {
-        console.log(ch.red("Unable to parse input file!"))
-        return rej()
+        throw new Error("Unable to parse input file!")
       }
 
       this.schema = this.metadata.data.map((d: IPanel): Figure => new Figure(d))
@@ -37,20 +36,19 @@ class Parser {
     })
   }
 
-  async run(ch: Chalk.Chalk, runAsync: boolean) {
+  async run(runAsync: boolean) {
     if (!this.metadata) {
-      console.log(ch.red("Unable to generate figures - no metadata defined"))
-      return
+      throw new Error("Unable to generate figures - no metadata defined")
     }
 
     if (runAsync) {
-      console.log('Running build asynchronously. This may cause font issues on Windows.')
+      if (!this.silent) console.log('Running build asynchronously. This may cause font issues on Windows.')
       this.schema.forEach(async (fig: Figure) => {
         await fig.generate()
       })
     } else {
       for (const fig of this.schema) {
-        console.log(`### Processing ${fig.metadata.output}`)
+        if (!this.silent) console.log(`### Processing ${fig.metadata.output}`)
         await fig.generate()
       }
     }
