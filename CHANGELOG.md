@@ -1,5 +1,9 @@
 # it-figures changelog
 
+## 0.4.0 [Released 2018-12-19]
+
+- Added `silent` mode - the `Parser` constructor and `Parser.run` arguments have changed
+
 ## 0.3.0 [Released 2018-10-16]
 
 ### Added
