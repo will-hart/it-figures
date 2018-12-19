@@ -40,7 +40,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var commander = require("commander");
 var chalk = require("chalk");
 var parser_1 = require("./parser");
-var version = '0.4.0';
+var version = '0.4.2';
 var ch = chalk.default;
 // Performs the file processing
 var processFile = function (input, opts, async) {

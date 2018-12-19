@@ -13,6 +13,7 @@ const document = window.document
 import { Nested, Doc } from 'svg.js'
 
 import * as fs from 'fs'
+import * as path from 'path'
 import { promisify } from 'util'
 
 import { IPanel, ISubFigure } from '../types';
@@ -36,7 +37,7 @@ class SvgGenerator {
     }
   }
 
-  generate = async (silent: boolean) => {
+  generate = async (root: string, silent: boolean) => {
     const canvas = this.generateCanvas(
       this.panel.sizex * this.panel.width,
       this.panel.sizey * this.panel.height
@@ -48,10 +49,11 @@ class SvgGenerator {
     }
 
     this.panel.images.forEach((image: ISubFigure) => {
-      if (!silent) console.log(` --> SVG Generator - ${image.source}`)
+      const srcPath = path.join(root, image.source)
+      if (!silent) console.log(` --> SVG Generator - ${srcPath}`)
 
       // create a group and throw the imported svg into it
-      const svg = fs.readFileSync(image.source, 'utf8');
+      const svg = fs.readFileSync(srcPath, 'utf8');
       const g = canvas.nested().svg(svg)
 
       const scale = this.getScale(g, image)
@@ -78,7 +80,8 @@ class SvgGenerator {
     })
 
     // write the svg string to file
-    await fsw(this.panel.output, canvas.svg())
+    const outPath = path.join(root, this.panel.output)
+    await fsw(outPath, canvas.svg())
   }
 
   /**

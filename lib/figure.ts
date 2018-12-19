@@ -23,16 +23,16 @@ class Figure {
   /**
    * Generates a figure panel from the supplied metadata
    */
-  generate = async (silent: boolean) => {
+  generate = async (root: string, silent: boolean) => {
     if (!this.metadata.mode || this.metadata.mode === ParserMode.Default)
     {
       if (!silent) console.log('Generating panel in default mode')
-      return new DefaultGenerator(this.metadata).generate(silent)
+      return new DefaultGenerator(this.metadata).generate(root, silent)
     }
 
     if (!silent) console.log(`Generating panel in ${this.metadata.mode} mode`)
     if (this.metadata.mode === ParserMode.Svg) {
-      return new SvgGenerator(this.metadata).generate(silent)
+      return new SvgGenerator(this.metadata).generate(root, silent)
     } else {
       throw new Error(`Unknown generation mode: ${this.metadata.mode}. No export will be created.`)
     }

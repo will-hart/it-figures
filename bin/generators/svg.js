@@ -46,13 +46,14 @@ var window = require('svgdom');
 var SVG = require('svg.js')(window);
 var document = window.document;
 var fs = require("fs");
+var path = require("path");
 var util_1 = require("util");
 var fsw = util_1.promisify(fs.writeFile);
 var SvgGenerator = /** @class */ (function () {
     function SvgGenerator(panel) {
         var _this = this;
-        this.generate = function (silent) { return __awaiter(_this, void 0, void 0, function () {
-            var canvas;
+        this.generate = function (root, silent) { return __awaiter(_this, void 0, void 0, function () {
+            var canvas, outPath;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -64,10 +65,11 @@ var SvgGenerator = /** @class */ (function () {
                             return [2 /*return*/];
                         }
                         this.panel.images.forEach(function (image) {
+                            var srcPath = path.join(root, image.source);
                             if (!silent)
-                                console.log(" --> SVG Generator - " + image.source);
+                                console.log(" --> SVG Generator - " + srcPath);
                             // create a group and throw the imported svg into it
-                            var svg = fs.readFileSync(image.source, 'utf8');
+                            var svg = fs.readFileSync(srcPath, 'utf8');
                             var g = canvas.nested().svg(svg);
                             var scale = _this.getScale(g, image);
                             g.scale(scale, scale)
@@ -86,10 +88,9 @@ var SvgGenerator = /** @class */ (function () {
                                 anchor: 'start'
                             });
                         });
-                        // write the svg string to file
-                        return [4 /*yield*/, fsw(this.panel.output, canvas.svg())];
+                        outPath = path.join(root, this.panel.output);
+                        return [4 /*yield*/, fsw(outPath, canvas.svg())];
                     case 1:
-                        // write the svg string to file
                         _a.sent();
                         return [2 /*return*/];
                 }

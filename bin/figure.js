@@ -54,17 +54,17 @@ var Figure = /** @class */ (function () {
         /**
          * Generates a figure panel from the supplied metadata
          */
-        this.generate = function (silent) { return __awaiter(_this, void 0, void 0, function () {
+        this.generate = function (root, silent) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 if (!this.metadata.mode || this.metadata.mode === types_1.ParserMode.Default) {
                     if (!silent)
                         console.log('Generating panel in default mode');
-                    return [2 /*return*/, new generators_1.DefaultGenerator(this.metadata).generate(silent)];
+                    return [2 /*return*/, new generators_1.DefaultGenerator(this.metadata).generate(root, silent)];
                 }
                 if (!silent)
                     console.log("Generating panel in " + this.metadata.mode + " mode");
                 if (this.metadata.mode === types_1.ParserMode.Svg) {
-                    return [2 /*return*/, new generators_1.SvgGenerator(this.metadata).generate(silent)];
+                    return [2 /*return*/, new generators_1.SvgGenerator(this.metadata).generate(root, silent)];
                 }
                 else {
                     throw new Error("Unknown generation mode: " + this.metadata.mode + ". No export will be created.");
