@@ -7,10 +7,11 @@
  * generates figure panels accordingly.
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -64,24 +65,20 @@ var DefaultGenerator = /** @class */ (function () {
          */
         this.generateBlankCanvas = function (width, height) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, sharp(undefined, {
-                            create: {
-                                width: width,
-                                height: height,
-                                channels: 4,
-                                background: { r: 0, g: 0, b: 0, alpha: 0 }
-                            }
-                        }).png()];
-                    case 1: 
-                    // start by creating an empty input buffer in the size of the image
-                    return [2 /*return*/, _a.sent()];
-                }
+                // start by creating an empty input buffer in the size of the image
+                return [2 /*return*/, sharp({
+                        create: {
+                            width: width,
+                            height: height,
+                            channels: 4,
+                            background: { r: 0, g: 0, b: 0, alpha: 0 }
+                        }
+                    }).png()];
             });
         }); };
         /**
          * Generates and applies the given subfigures to the passed image
-         * @param sh The SharpInstance being written
+         * @param sh The Sharp instance being written
          */
         this.applySubFigures = function (sh, root, silent) { return __awaiter(_this, void 0, void 0, function () {
             var newSh, _i, _a, image, offx, offy, top_1, left, w, h, srcPath, blank, subfig, imgBuffer, buff;
@@ -107,14 +104,11 @@ var DefaultGenerator = /** @class */ (function () {
                     case 2:
                         blank = _b.sent();
                         return [4 /*yield*/, sharp(srcPath)
-                                .resize(w, h)
-                                .max()
-                                .background({ r: 0, g: 0, b: 0, alpha: 0 })
-                                .embed()
+                                .resize(w, h, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
                                 .toBuffer()];
                     case 3:
                         subfig = _b.sent();
-                        return [4 /*yield*/, blank.overlayWith(subfig, { top: offy, left: offx }).toBuffer()];
+                        return [4 /*yield*/, blank.composite([{ input: subfig, top: offy, left: offx }]).toBuffer()];
                     case 4:
                         imgBuffer = _b.sent();
                         if (!image.caption) return [3 /*break*/, 6];
@@ -122,10 +116,11 @@ var DefaultGenerator = /** @class */ (function () {
                     case 5:
                         imgBuffer = _b.sent();
                         _b.label = 6;
-                    case 6: return [4 /*yield*/, newSh.overlayWith(imgBuffer, {
-                            top: top_1,
-                            left: left
-                        }).toBuffer()];
+                    case 6: return [4 /*yield*/, newSh.composite([{
+                                input: imgBuffer,
+                                top: top_1,
+                                left: left
+                            }]).toBuffer()];
                     case 7:
                         buff = _b.sent();
                         return [4 /*yield*/, sharp(buff)];
@@ -144,8 +139,8 @@ var DefaultGenerator = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        captBuffer = new Buffer("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\">\n      <style>.c { font-family: " + font + " }</style>\n      <text class=\"c\" x=\"0\" y=\"0\" dy=\"" + fontSize + "\" font-size=\"" + fontSize + "\" fill=\"#000\">" + caption + "</text>\n    </svg>");
-                        return [4 /*yield*/, sharp(buf).overlayWith(captBuffer, { top: 0, left: 0 }).toBuffer()];
+                        captBuffer = Buffer.from("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\">\n      <style>.c { font-family: " + font + " }</style>\n      <text class=\"c\" x=\"0\" y=\"0\" dy=\"" + fontSize + "\" font-size=\"" + fontSize + "\" fill=\"#000\">" + caption + "</text>\n    </svg>");
+                        return [4 /*yield*/, sharp(buf).composite([{ input: captBuffer, top: 0, left: 0 }]).toBuffer()];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
