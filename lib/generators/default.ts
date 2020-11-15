@@ -33,7 +33,7 @@ class DefaultGenerator {
    */
   generateBlankCanvas = async (width: number, height: number) => {
     // start by creating an empty input buffer in the size of the image
-    return await sharp(undefined, {
+    return sharp({
       create: {
         width: width,
         height: height,
@@ -45,9 +45,9 @@ class DefaultGenerator {
 
   /**
    * Generates and applies the given subfigures to the passed image
-   * @param sh The SharpInstance being written
+   * @param sh The Sharp instance being written
    */
-  applySubFigures = async (sh: sharp.SharpInstance, root: string, silent: boolean) => {
+  applySubFigures = async (sh: sharp.Sharp, root: string, silent: boolean) => {
     let newSh = sh
 
     for (const image of this.panel.images) {
@@ -63,13 +63,10 @@ class DefaultGenerator {
       const blank = await this.generateBlankCanvas(w + offx, h + offy)
 
       const subfig = await sharp(srcPath)
-        .resize(w, h)
-        .max()
-        .background({r: 0, g: 0, b: 0, alpha: 0})
-        .embed()
+        .resize(w, h, { fit: 'contain', background: {r: 0, g: 0, b: 0, alpha: 0} })
         .toBuffer()
 
-      let imgBuffer = await blank.overlayWith(subfig, { top: offy, left: offx }).toBuffer()
+      let imgBuffer = await blank.composite([ { input: subfig,  top: offy, left: offx } ]).toBuffer()
 
       if (image.caption) {
         imgBuffer = await this.addCaption(
@@ -80,10 +77,11 @@ class DefaultGenerator {
         )
       }
 
-      const buff = await newSh.overlayWith(imgBuffer, {
+      const buff = await newSh.composite([{
+        input: imgBuffer,
         top: top,
         left: left
-      }).toBuffer()
+      }]).toBuffer()
 
       newSh = await sharp(buff)
     }
@@ -92,19 +90,19 @@ class DefaultGenerator {
   }
 
   addCaption = async (buf: Buffer, caption: string, fontSize: number, font: string) => {
-    const captBuffer = new Buffer(`<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+    const captBuffer = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
       <style>.c { font-family: ${font} }</style>
       <text class="c" x="0" y="0" dy="${fontSize}" font-size="${fontSize}" fill="#000">${caption}</text>
     </svg>`)
 
-    return await sharp(buf).overlayWith(captBuffer, { top: 0, left: 0 }).toBuffer()
+    return await sharp(buf).composite([{ input: captBuffer, top: 0, left: 0 }]).toBuffer()
   }
 
   /**
    * Writes the generated figure panel out to file
    * @param sh The SharpInstance being written
    */
-  writeOutput = async (sh: sharp.SharpInstance, root: string) => {
+  writeOutput = async (sh: sharp.Sharp, root: string) => {
     const outPath = path.join(root, this.panel.output)
     return await sh.toFile(outPath)
       .then(() => true)

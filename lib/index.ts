@@ -14,7 +14,7 @@ import * as chalk from 'chalk'
 import Parser from './parser';
 
 const version = '0.4.2'
-const ch = chalk.default
+const ch = chalk
 
 // Performs the file processing
 const processFile = (input: any, opts: any, async: boolean) => {

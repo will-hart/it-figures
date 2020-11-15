@@ -6,9 +6,9 @@
  * generates figure panels accordingly.
  */
 
-const window   = require('svgdom')
-const SVG      = require('svg.js')(window)
-const document = window.document
+const { createSVGWindow } = require('svgdom')
+const window = createSVGWindow()
+const SVG = require('svg.js')(window)
 
 import { Nested, Doc } from 'svg.js'
 
