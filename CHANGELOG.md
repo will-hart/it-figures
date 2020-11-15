@@ -1,5 +1,10 @@
 # it-figures changelog
 
+## 0.5.0 [Released 2020-15-11]
+
+- Update all dependencies
+- Handle deprecations
+
 ## 0.4.2 [Released 2018-12-19]
 
 - Updated dependencies
