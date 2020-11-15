@@ -1,5 +1,9 @@
 # it-figures changelog
 
+## 0.5.1 [Released 2020-15-11]
+
+- Display correct version in CLI
+
 ## 0.5.0 [Released 2020-15-11]
 
 - Update all dependencies
